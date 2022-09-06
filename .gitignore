@@ -1,0 +1,8 @@
+#node modules
+node_modules
+#javascript bundle
+dist
+#environment variables
+.env
+#lock file
+yarn.lock

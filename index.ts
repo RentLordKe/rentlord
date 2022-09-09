@@ -7,6 +7,8 @@ import db from "./src/config/dbconfig";
 import userRoutes from "./src/users/userRoutes";
 //Property Routes
 import propertyRoutes from "./src/properties/propertyRoutes";
+//ManagerRoutes
+import managerRoutes from "./src/managers/managerRoutes";
 //Units Routes
 import unitRoutes from "./src/units/unitRoutes";
 //Tenants Routes
@@ -37,6 +39,7 @@ app.use(express.urlencoded({extended: false}));
 
 app.use('/user', userRoutes);
 app.use('/property', propertyRoutes);
+app.use('/managers', managerRoutes);
 app.use('/units', unitRoutes);
 app.use('/tenants', tenantRoutes);
 app.use('/damages', damageRoutes);

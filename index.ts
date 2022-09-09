@@ -9,6 +9,8 @@ import userRoutes from "./src/users/userRoutes";
 import propertyRoutes from "./src/properties/propertyRoutes";
 //Units Routes
 import unitRoutes from "./src/units/unitRoutes";
+//Tenants Routes
+import tenantRoutes from "./src/tenants/tenantRoutes";
 
 dotenv.config();
 
@@ -34,6 +36,7 @@ app.use(express.urlencoded({extended: false}));
 app.use('/user', userRoutes);
 app.use('/property', propertyRoutes);
 app.use('/units', unitRoutes);
+app.use('/tenants', tenantRoutes);
 
 
 app.listen(port, () => {

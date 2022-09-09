@@ -92,17 +92,16 @@ const findTenantByUserId = async (UserId: number) => {
 }
 
 
-const editUnit = async () => {
+const editTenant = async (id: number) => {
 
 }
 
-
 export {
     addTenant,
-    editUnit,
+    editTenant,
     findAllTenants,
     findAllTenantsInProperty,
     findAllTenantsInPropertyCount,
     findTenantById,
-    findTenantByUserId
+    findTenantByUserId,
 };

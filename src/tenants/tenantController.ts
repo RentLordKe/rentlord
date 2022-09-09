@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import {
     addTenant,
-    editUnit,
+    editTenant,
     findAllTenants,
     findAllTenantsInProperty,
     findAllTenantsInPropertyCount,
@@ -99,26 +99,10 @@ const updateTenant=  async (req: Request, res: Response) => {
 
 }
 
-const removeTenant = async (req: Request, res: Response) => {
-    const { id } = req.params;
-
-    try {
-        const unit = await findTenantById(Number(id));
-        if (!unit) return res.status(404).json({message: `Tenant with id = ${id} does not exists`});
-
-        await unit.destroy();
-        return res.json({message: "success"});
-    } catch (error) {
-        return res.status(500).json({message:"error", error});
-    }
-}
-
-
 export {
     createTenant,
     getAllTenants,
     getMyTenants,
     getTenantById,
-    removeTenant,
     updateTenant
 };

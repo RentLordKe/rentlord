@@ -7,7 +7,6 @@ import {
     getAllTenants,
     getMyTenants,
     getTenantById,
-    removeTenant,
     updateTenant
 } from './tenantController';
 
@@ -22,8 +21,7 @@ router.get('/', tenantValidator.checkGetTenant(), validationMiddleware, getMyTen
 //Get one tenant
 router.get('/:id',tenantValidator.checkIdParam(), validationMiddleware, getTenantById);
 //update tenant
-router.put('/:id',tenantValidator.checkIdParam(), validationMiddleware, removeTenant);
-//delete tenant
-router.delete('/:id',tenantValidator.checkIdParam(), validationMiddleware, updateTenant);
+router.put('/:id',tenantValidator.checkIdParam(), validationMiddleware, updateTenant);
+
 
 export default router;

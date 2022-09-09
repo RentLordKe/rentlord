@@ -1,6 +1,6 @@
 import { DamageModel } from "./damageModel";
 
-interface PropertyRegistrationData {
+interface DamageRegistrationData {
     description: string;
     worth: number; 
     cleared: boolean;
@@ -8,7 +8,7 @@ interface PropertyRegistrationData {
     PropertyId: number;
 }
 
-const addDamage = async ({ description, worth, cleared, TenantId, PropertyId }: PropertyRegistrationData) => {
+const addDamage = async ({ description, worth, cleared, TenantId, PropertyId }: DamageRegistrationData) => {
     return await DamageModel.create({
         description,
         worth,

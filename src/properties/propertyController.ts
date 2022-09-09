@@ -9,7 +9,7 @@ import {
     editProperty
 } from './propertyService';
 
-const ownerId = 3;
+const ownerId = 7;
 
 const createProperty = async (req: Request, res: Response) => {
     const { propertyName, location, buildingType, totalUnits } = req.body;

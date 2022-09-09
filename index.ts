@@ -11,6 +11,8 @@ import propertyRoutes from "./src/properties/propertyRoutes";
 import unitRoutes from "./src/units/unitRoutes";
 //Tenants Routes
 import tenantRoutes from "./src/tenants/tenantRoutes";
+//Tenant DamagesRoutes
+import damageRoutes from "./src/damages/damageRoutes";
 
 dotenv.config();
 
@@ -37,6 +39,7 @@ app.use('/user', userRoutes);
 app.use('/property', propertyRoutes);
 app.use('/units', unitRoutes);
 app.use('/tenants', tenantRoutes);
+app.use('/damages', damageRoutes);
 
 
 app.listen(port, () => {

@@ -11,6 +11,7 @@ import {
 } from './tenantService';
 
 import { findPropertyById } from '../properties/propertyService';
+import { findUserById } from '../users/userService';
 
 const createTenant = async (req: Request, res: Response) => {
     const { nextOfKinName, nextOfKinMobile, nextofKinRelation, entryDate, totalPaid, UnitId, PropertyId,  UserId } = req.body;
@@ -26,6 +27,10 @@ const createTenant = async (req: Request, res: Response) => {
         //Check if Tenant Exists
         const tenant = await findTenantByUserId(UserId);
         if (tenant) return res.status(400).json({message: "Tenant already exists"});
+        //check if user role == tenant
+        const user = await findUserById(Number(UserId));
+        const userObject = user?.toJSON();
+        if (userObject?.role != "tenant") return res.status(400).json({message: `User not tenant. User is ${userObject?.role}`});
         //Add tenant if does not exists
         const record  = await addTenant({ nextOfKinName, nextOfKinMobile, nextofKinRelation, entryDate, totalPaid, UnitId, PropertyId,  UserId });
         return res.status(201).json({record, message:"success"});

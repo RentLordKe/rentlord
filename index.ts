@@ -2,7 +2,9 @@ import express, { Application } from "express";
 import dotenv from "dotenv";
 
 //Sequelize Database Connector
-import db from "./src/config/dbconfig";
+import { dbAuthenticate } from "./src/config/dbconfig";
+//Authentication Routes
+import authRoutes from "./src/auth/authRoutes";
 //User Routes
 import userRoutes from "./src/users/userRoutes";
 //Property Routes
@@ -21,22 +23,11 @@ dotenv.config();
 const app: Application = express();
 const port = process.env.PORT;
 
-//Database Authentication
-const dbAuthenticate = async () => {
-    try {
-      await db.authenticate();
-      console.log('Connection has been established successfully.');
-      await db.sync();
-    } catch (error) {
-      console.error('Unable to connect to the database:', error);
-    }
-}
-
-dbAuthenticate();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
+app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/property', propertyRoutes);
 app.use('/managers', managerRoutes);
@@ -47,4 +38,5 @@ app.use('/damages', damageRoutes);
 
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
+    dbAuthenticate();
 });

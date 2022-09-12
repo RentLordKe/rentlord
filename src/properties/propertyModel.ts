@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 
-import db from '../config/dbconfig';
+import { sequelize as db} from '../config/dbconfig';
 import { UserModel } from '../users/userModel'
 
 interface PropertyAttributes {

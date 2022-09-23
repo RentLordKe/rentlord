@@ -33,6 +33,7 @@ const signIn = async (req: Request, res: Response) => {
         return res.status(200).json({ accessToken,  refreshToken});
 
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ message: "error", error});
     }
 }
@@ -69,7 +70,7 @@ const forgotPassword =  async (req: Request, res: Response) => {
        //add token to db
        const record  = await addToken({token, UserId});
        //Send Email, url to have token and Userid
-       const url = `http://localhost:8081/auth/password-reset?token=${token}&email=${email}&id=${UserId}}`;
+       const url = `http://localhost:5000/auth/password-reset?token=${token}&email=${email}&id=${UserId}}`;
        await sendMail({to: email, subject: 'Password Recovery', html: emailTemplates.passwordReset(firstName, 'Password Recovery', url)});
 
        return res.status(201).json({record, message:"success"});

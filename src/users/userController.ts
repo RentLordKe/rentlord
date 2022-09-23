@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import argon2 from "argon2";
 
 import {
     addUser,
@@ -16,7 +17,8 @@ const createUser = async (req: Request, res: Response) => {
         const user = await findUserByEmail(email);
         if (user) return res.status(400).json({message: "user already exists"});
         //add user if user does not exist
-        const record  = await addUser({firstName, lastName, phoneNumber, idNumber, email, password, role});
+        const hashedPassword = await argon2.hash(password);
+        const record  = await addUser({firstName, lastName, phoneNumber, idNumber, email, password: hashedPassword, role});
         return res.status(201).json({record, message:"success"});
     } catch (error) {
         return res.status(500).json({message:"error", error});

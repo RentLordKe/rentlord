@@ -1,5 +1,3 @@
-import bcrypt from "bcrypt";
-
 import { UserModel } from "../users/userModel";
 
 interface UserRegistrationData {
@@ -16,14 +14,14 @@ const addUser = async ({firstName, lastName, phoneNumber, idNumber, email, passw
     const active = false;
     const disabled =  false;
     //Hash password before storing in DB
-    const hashedPassword = await bcrypt.hash(password, 12);
+   
     return await UserModel.create({
         firstName,
         lastName,
         phoneNumber,
         idNumber,
         email,
-        password: hashedPassword,
+        password,
         role,
         active,
         disabled

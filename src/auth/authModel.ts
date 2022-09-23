@@ -6,7 +6,6 @@ import { UserModel } from '../users/userModel';
 interface PasswordResetAttributes {
     id: number;
     token: string;
-    expiresAfter: string;
     UserId: number;
     createdAt?: Date;
     updatedAt?: Date;
@@ -28,11 +27,6 @@ PasswordResetModel.init({
    token:{
     type: DataTypes.STRING,
     allowNull: false
-   },
-   expiresAfter:{
-    type: DataTypes.STRING,
-    allowNull: false,
-    field: "expires_after"
    },
    UserId: {
     type: DataTypes.BIGINT,

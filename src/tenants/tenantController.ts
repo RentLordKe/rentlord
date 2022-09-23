@@ -67,7 +67,7 @@ const getMyTenants= async (req: Request, res: Response) => {
     //if limit is undefined set default to 10
     if(!limit) limit = 10;
    
-    const PropertyId = 1;
+    const PropertyId = 2;
 
     try {
         //Find tenants with pagination

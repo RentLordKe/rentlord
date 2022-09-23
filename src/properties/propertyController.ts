@@ -9,15 +9,15 @@ import {
     editProperty
 } from './propertyService';
 
-const ownerId = 7;
 
 const createProperty = async (req: Request, res: Response) => {
     const { propertyName, location, buildingType, totalUnits } = req.body;
-    
+    const UserId = res.locals.userId;
+
     try {
         const property = await findPropertyByNameAndLocation(propertyName, location);
         if(property) return res.status(400).json({message: "Property already exists"});
-        const record  = await addProperty({ propertyName, location, buildingType, totalUnits }, ownerId);
+        const record  = await addProperty({ propertyName, location, buildingType, totalUnits }, UserId);
         return res.status(201).json({record, message:"success"});
     } catch (error) {
         return res.status(500).json({message:"error", error});
@@ -27,7 +27,7 @@ const createProperty = async (req: Request, res: Response) => {
 const getAllProperty = async (req: Request, res: Response) => {
     let page = req.query?.page as number | undefined;
     let limit = req.query?.limit as number | undefined;
-    
+
     //if page is undefined set default to 1
     if(!page) page = 1;
     //if limit is undefined set default to 10
@@ -45,6 +45,7 @@ const getAllProperty = async (req: Request, res: Response) => {
 const getMyProperty = async (req: Request, res: Response) => {
     let page = req.query?.page as number | undefined;
     let limit = req.query?.limit as number | undefined;
+    const UserId = res.locals.userId;
     
     //if page is undefined set default to 1
     if(!page) page = 1;
@@ -53,7 +54,7 @@ const getMyProperty = async (req: Request, res: Response) => {
    
     try {
         //Find properties with pagination
-        const properties = await findMyProperty(page, limit, ownerId);
+        const properties = await findMyProperty(page, limit, UserId);
         return res.status(200).json(properties);
     } catch (error) {
         return res.status(500).json({message:"error", error});
@@ -61,6 +62,7 @@ const getMyProperty = async (req: Request, res: Response) => {
 }
 
 const getPropertyById = async (req: Request, res: Response) => {
+
     const { id } = req.params;
 
     try {
@@ -88,10 +90,13 @@ const updateProperty =  async (req: Request, res: Response) => {
 
 const removeProperty = async (req: Request, res: Response) => {
     const { id } = req.params;
-
+    const UserId = res.locals.userId;
     try {
         const property = await findPropertyById(Number(id));
         if (!property) return res.status(404).json({message: `property with id = ${id} does not exists`});
+        //Check if property belongs to the user before deleting
+        const propertyObject = property.toJSON();
+        if (propertyObject.UserId != UserId) return res.status(401).json({message: "unauthorized"});
 
         await property.destroy();
         return res.json({message: "success"});

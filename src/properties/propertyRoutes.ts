@@ -10,20 +10,21 @@ import {
     updateProperty,
     removeProperty
 } from './propertyController';
+import { authMiddleware } from '../middleware/authMiddleware';
 
 const router = express.Router();
 
 //create property
-router.post('/', propertyValidator.checkCreateProperty(),  validationMiddleware, createProperty);
+router.post('/', authMiddleware('owner'), propertyValidator.checkCreateProperty(),  validationMiddleware, createProperty);
 //Get all Properties
-router.get('/admin-get-all', propertyValidator.checkGetProperty(), validationMiddleware, getAllProperty)
+router.get('/admin-get-all', authMiddleware('admin'), propertyValidator.checkGetProperty(), validationMiddleware, getAllProperty)
 //Get my properties
-router.get('/', propertyValidator.checkGetProperty(), validationMiddleware, getMyProperty);
+router.get('/', authMiddleware('owner'), propertyValidator.checkGetProperty(), validationMiddleware, getMyProperty);
 //get one property
-router.get('/:id',propertyValidator.checkIdParam(), validationMiddleware, getPropertyById);
+router.get('/:id',authMiddleware('owner'), propertyValidator.checkIdParam(), validationMiddleware, getPropertyById);
 //update property
-router.put('/:id',propertyValidator.checkIdParam(), validationMiddleware, updateProperty);
+router.put('/:id',authMiddleware('owner'), propertyValidator.checkIdParam(), validationMiddleware, updateProperty);
 //delete property
-router.delete('/:id',propertyValidator.checkIdParam(), validationMiddleware, removeProperty);
+router.delete('/:id',authMiddleware('owner'), propertyValidator.checkIdParam(), validationMiddleware, removeProperty);
 
 export default router;

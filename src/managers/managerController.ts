@@ -9,9 +9,9 @@ import {
     findManagerByUserId
 } from './managerService';
 
+
 const createManager = async (req: Request, res: Response) => {
     const { accessLevel, UserId, PropertyId } = req.body;
-
     try {
         //Check if Manager Exists
         const manager = await findManagerByUserId(Number(UserId));
@@ -47,11 +47,11 @@ const getAllManagers = async (req: Request, res: Response) => {
 }
 
 const getManagerById = async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const { managerId } = req.params;
 
     try {
-        const manager = await findManagerById(Number(id));
-        if (!manager) return res.status(404).json({message: `Manager with id = ${id} does not exists`});
+        const manager = await findManagerById(Number(managerId));
+        if (!manager) return res.status(404).json({message: `Manager with id = ${managerId} does not exists`});
         return res.json(manager);
     } catch (error) {
         return res.status(500).json({message:"error", error});
@@ -59,13 +59,14 @@ const getManagerById = async (req: Request, res: Response) => {
 }
 
 const updateManager =  async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const { id } = req.body;
+    const { managerId } = req.params;
 
     try {
-        const manager = await findManagerById(Number(id));
-        if (!manager) return res.status(404).json({message: `Manager with id = ${id} does not exists`});
-    
-        //To be implemented
+        //check if manager exists
+        const manager = await findManagerById(Number(managerId));
+        if (!manager) return res.status(404).json({message: `Manager with id = ${managerId} does not exists`});
+            //To be implemented
     } catch (error) {
         return res.status(500).json({message:"error", error});
     }
@@ -73,12 +74,13 @@ const updateManager =  async (req: Request, res: Response) => {
 }
 
 const removeManager = async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const { managerId } = req.params;
+    const OwnerId = res.locals.userId;
 
     try {
-        const manager = await findManagerById(Number(id));
-        if (!manager) return res.status(404).json({message: `Manager with id = ${id} does not exists`});
-
+        const manager = await findManagerById(Number(managerId));
+        if (!manager) return res.status(404).json({message: `Manager with id = ${managerId} does not exists`});
+        //check if manager belongs to user - ToD0
         await manager.destroy();
         return res.json({message: "success"});
     } catch (error) {

@@ -9,12 +9,10 @@ interface PasswordResetData {
 }
 
 const addToken = async ({ token, UserId }: PasswordResetData) => {
-    const expiresAfter =  process.env.RESET_TOKEN_EXPIRE_TIME as string;
 
     return await PasswordResetModel.create({
         token,
-        UserId,
-        expiresAfter
+        UserId
     });
 }
 

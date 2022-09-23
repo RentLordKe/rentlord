@@ -15,7 +15,7 @@ import {
 import { findPropertyById } from '../properties/propertyService';
 
 
-const PropertyId = 1;
+const PropertyId = 2;
 
 const createUnit = async (req: Request, res: Response) => {
     const { unitNumber, depositAmount, rentAmount, otherFees, currency, vacant } = req.body;

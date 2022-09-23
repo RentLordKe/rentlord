@@ -13,12 +13,15 @@ import {
     updateUnit
 } from './unitController';
 
+import { authMiddleware } from '../middleware/authMiddleware';
+
+
 const router = express.Router();
 
 //create unit
-router.post('/', unitValidator.checkCreateUnit(),  validationMiddleware, createUnit);
+router.post('/', authMiddleware('manager'), unitValidator.checkCreateUnit(),  validationMiddleware, createUnit);
 //Get all units
-router.get('/all', unitValidator.checkGetUnit(), validationMiddleware, getAllUnits)
+router.get('/all', authMiddleware('admin'), unitValidator.checkGetUnit(), validationMiddleware, getAllUnits)
 //Get my units
 router.get('/', unitValidator.checkGetUnit(), validationMiddleware, getMyUnits);
 //Get all vacant units 

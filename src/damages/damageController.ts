@@ -8,7 +8,7 @@ import {
     findMyDamages,
 } from './damageService';
 
-const ownerId = 7;
+const ownerId = 2;
 
 const createDamage = async (req: Request, res: Response) => {
     const { description, worth, cleared, TenantId, PropertyId } = req.body;
@@ -24,7 +24,7 @@ const createDamage = async (req: Request, res: Response) => {
 const getAllDamages = async (req: Request, res: Response) => {
     let page = req.query?.page as number | undefined;
     let limit = req.query?.limit as number | undefined;
-    const PropertyId = 1;
+    const PropertyId = 2;
     //if page is undefined set default to 1
     if(!page) page = 1;
     //if limit is undefined set default to 10
@@ -42,7 +42,7 @@ const getAllDamages = async (req: Request, res: Response) => {
 const getMyDamages = async (req: Request, res: Response) => {
     let page = req.query?.page as number | undefined;
     let limit = req.query?.limit as number | undefined;
-    const TenantId = 2;
+    const TenantId = 1;
     //if page is undefined set default to 1
     if(!page) page = 1;
     //if limit is undefined set default to 10
